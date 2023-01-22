@@ -2,8 +2,8 @@ package com.bridgelabz.employee_wage;
 
 public class EmployeeWage {
 
-    public static void main(String args[]) {
-
+    public static void main(String args[])
+    {
         final int PART_TIME = 1;
         final int FULL_TIME = 2;
         final int WAGE_PER_HR = 20;
