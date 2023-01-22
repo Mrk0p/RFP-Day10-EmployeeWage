@@ -1,5 +1,11 @@
 package com.bridgelabz.employee_wage;
 
+interface IEmployeeWage
+{
+    public void addCompany(String companyName, int wagePerHr, int maxWorkingDays, int maxWorkingHrs);
+
+    public void calculateTotalWage();
+}
 class CompanyEmpWage
 {
     final String COMPANY_NAME;
@@ -32,11 +38,10 @@ class CompanyEmpWage
         return "Total wage for a month of " + COMPANY_NAME + " employee is " + totalEmpWage + "\n";
     }
 }
- class EmployeeWage  {
+ class EmployeeWage implements IEmployeeWage {
 
     public static final int PART_TIME = 1;
     public static final int FULL_TIME = 2;
-    // instance variables
     int noOfCompanies, index;
     CompanyEmpWage[] companies;
 
