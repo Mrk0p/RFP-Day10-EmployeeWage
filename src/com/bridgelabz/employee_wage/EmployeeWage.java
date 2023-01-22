@@ -1,6 +1,7 @@
 package com.bridgelabz.employee_wage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 interface IEmployeeWage
 {
@@ -11,12 +12,12 @@ interface IEmployeeWage
 
 class CompanyEmpWage
 {
-
+    // instance constants
     final String COMPANY_NAME;
     final int WAGE_PER_HR;
     final int MAX_WORKING_DAYS;
     final int MAX_WORKING_HRS;
-
+    // instance variable
     int totalEmpWage;
 
     CompanyEmpWage(String companyName, int wagePerHr, int maxWorkingDays, int maxWorkingHrs)
@@ -33,6 +34,7 @@ class CompanyEmpWage
         this.totalEmpWage = totalEmpWage;
     }
 
+    @Override
     public String toString()
     {
         System.out.println("Details of " + COMPANY_NAME + " employee");
@@ -46,21 +48,23 @@ class CompanyEmpWage
 
 class EmployeeWage implements IEmployeeWage
 {
-    // class constants
     public static final int PART_TIME = 1;
     public static final int FULL_TIME = 2;
     // instance variables
     ArrayList<CompanyEmpWage> companies;
+    HashMap<String, Integer> totalEmpWages;
 
     public EmployeeWage()
     {
         companies = new ArrayList<>();
+        totalEmpWages = new HashMap<>();
     }
 
     public void addCompany(String companyName, int wagePerHr, int maxWorkingDays, int maxWorkingHrs)
     {
         CompanyEmpWage company = new CompanyEmpWage(companyName, wagePerHr, maxWorkingDays, maxWorkingHrs);
         companies.add(company);
+        totalEmpWages.put(companyName,0);
     }
 
     int generateEmployeeType()
@@ -107,7 +111,18 @@ class EmployeeWage implements IEmployeeWage
             totalWage += wage;
             System.out.printf("%5d       %5d      %5d      %5d\n", day, workingHrs, wage, totalWorkingHrs + workingHrs);
         }
+        totalEmpWages.put(companyEmpWage.COMPANY_NAME, totalWage);
         return totalWage;
+    }
+
+    void printTotalEmpWages()
+    {
+        System.out.println("The Companies and their total Employee Wages are:");
+        for (String companyName : totalEmpWages.keySet())
+        {
+            System.out.println(companyName + ": " + totalEmpWages.get(companyName));
+        }
+
     }
 
     public static void main(String args[])
@@ -115,8 +130,9 @@ class EmployeeWage implements IEmployeeWage
         EmployeeWage employeeWage = new EmployeeWage();
         employeeWage.addCompany("Microsoft", 4, 30, 100);
         employeeWage.addCompany("Google", 5, 40, 170);
-        employeeWage.addCompany("Apple", 9, 10, 70);
         employeeWage.addCompany("Amazon", 19, 10, 150);
         employeeWage.calculateTotalWage();
+        employeeWage.printTotalEmpWages();
     }
 }
+
